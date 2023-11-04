@@ -2,11 +2,14 @@ package tn.esprit.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-@EntityScan("tn.esprit.spring.Entity")
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 @SpringBootApplication
+@EnableScheduling
 public class Application extends SpringBootServletInitializer{
 	
 	@Override
@@ -18,5 +21,17 @@ public class Application extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+	
+	@Bean
+	public BCryptPasswordEncoder bCryptPassword() {
+		
+			return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public SpringApplicationContext springApplicationContext() {
+		return new SpringApplicationContext();
+	}
+	
 
 }
