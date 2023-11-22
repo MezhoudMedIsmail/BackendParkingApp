@@ -24,42 +24,49 @@ import lombok.Setter;
 @Setter
 public class HistoriqueEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    
-    @Column(name="user")
-    private String user;
-    
-    @Column(name="startingDate")
-    private Date startingDate;
-    
-    @Column(name="endDate")
-    private Date endDate;
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Column(name = "user")
+	private String user;
+
+	@Column(name = "startingDate")
+	private Date startingDate;
+
+	@Column(name = "endDate")
+	private Date endDate;
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getUser() {
 		return user;
 	}
+
 	public void setUser(String user) {
 		this.user = user;
 	}
+
 	public Date getStartingDate() {
 		return startingDate;
 	}
+
 	public void setStartingDate(Date startingDate) {
 		this.startingDate = startingDate;
 	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-    
+
 }

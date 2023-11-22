@@ -1,26 +1,31 @@
 package tn.esprit.spring.requests;
 
+//Déclaration de la classe UserLoginRequest utilisée pour encapsuler les informations de connexion d'un utilisateur.
 public class UserLoginRequest {
-	
-		private String email;
-		
-		private String password;
 
-		public String getEmail() {
-			return email;
-		}
+	// Attribut représentant l'adresse email de l'utilisateur.
+	private String email;
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
+	// Attribut représentant le mot de passe de l'utilisateur.
+	private String password;
 
-		public String getPassword() {
-			return password;
-		}
+	// Méthode permettant d'obtenir l'adresse email de l'utilisateur.
+	public String getEmail() {
+		return email;
+	}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
-		
-		
+	// Méthode permettant de définir l'adresse email de l'utilisateur.
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	// Méthode permettant d'obtenir le mot de passe de l'utilisateur.
+	public String getPassword() {
+		return password;
+	}
+
+	// Méthode permettant de définir le mot de passe de l'utilisateur.
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

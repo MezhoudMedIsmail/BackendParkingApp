@@ -13,53 +13,51 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class UserEntity implements Serializable{
-	
+public class UserEntity implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6830902149883544893L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	private String userId;
-	
-	@Column(nullable = false , length=50)
+
+	@Column(nullable = false, length = 50)
 	private String firstName;
-	
-	@Column( nullable = false , length=50)
+
+	@Column(nullable = false, length = 50)
 	private String lastName;
-	
-	@Column(nullable = false , length=50 , unique=true)
-    private String email;
-	
+
+	@Column(nullable = false, length = 50, unique = true)
+	private String email;
+
 	@Column(nullable = false)
 	private String encryptedPassword;
-	
-	
-	@Column(nullable = false ,length=50)
-	private String post_title;
-	
-	@Column(nullable = false , length=50)
-	private long phone_num;
-	
-	@JsonFormat(shape= JsonFormat.Shape.STRING , pattern="yyyy-MM-dd")
-	private Date hiring_date;
-	
-	@Column(nullable = false , length=50)
-	private String role;
-	
-	@OneToOne(cascade = { CascadeType.ALL})
-	private Voiture voitures;
-	
-	@OneToOne(mappedBy = "user")
-	@JsonIgnore
-    private PlaceParking placeParking;
 
-	
+	@Column(nullable = false, length = 50)
+	private String post_title;
+
+	@Column(nullable = false, length = 50)
+	private long phone_num;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date hiring_date;
+
+	@Column(nullable = false, length = 50)
+	private String role;
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	private Voiture voitures;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private PlaceParking placeParking;
 
 	public String getRole() {
 		return role;
@@ -116,7 +114,7 @@ public class UserEntity implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getEncryptedPassword() {
 		return encryptedPassword;
 	}

@@ -1,4 +1,5 @@
 package tn.esprit.spring.entities;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,19 +24,19 @@ import lombok.Setter;
 @Setter
 public class Parking implements Serializable {
 	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name="libelle")
-    private String libelle;
-    @Column(name="adresse")
-    private String adresse;
-    @Column(name="capacite")
-    private int capacite;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="parking")
-    private List<PlaceParking> placeparking;
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Column(name = "libelle")
+	private String libelle;
+	@Column(name = "adresse")
+	private String adresse;
+	@Column(name = "capacite")
+	private int capacite;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parking")
+	private List<PlaceParking> placeparking;
+
 	public List<PlaceParking> getPlaceparkings() {
 		return placeparking;
 	}

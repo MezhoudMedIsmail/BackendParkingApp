@@ -26,63 +26,63 @@ import tn.esprit.spring.requests.UserLoginRequest;
 import tn.esprit.spring.services.UserService;
 import tn.esprit.spring.shared.dto.UserDto;
 
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
-		
-		
-		
-		private final AuthenticationManager authenticationManager;
-		
-		
-		public AuthenticationFilter(AuthenticationManager authenticationManager) {
-			this.authenticationManager = authenticationManager;
+//Déclaration de la classe AuthenticationFilter qui étend UsernamePasswordAuthenticationFilter.
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+	// Gestionnaire d'authentification pour traiter les tentatives
+	// d'authentification.
+	private final AuthenticationManager authenticationManager;
+
+	// Constructeur de la classe qui prend un gestionnaire d'authentification en
+	// paramètre.
+	public AuthenticationFilter(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
+
+	// Méthode pour tenter l'authentification en récupérant les informations
+	// d'identification de la demande.
+	@Override
+	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
+			throws AuthenticationException {
+		try {
+			// Lecture des informations d'identification (email et mot de passe) de la
+			// demande.
+			UserLoginRequest creds = new ObjectMapper().readValue(req.getInputStream(), UserLoginRequest.class);
+
+			// Authentification en utilisant le gestionnaire d'authentification.
+			return authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		
-		
-		
-		@Override
-		public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) //Sert Ã  recuperer la demande qui comporte email et password 
-				throws AuthenticationException {
-			try {
+	}
 
-				UserLoginRequest creds = new ObjectMapper().readValue(req.getInputStream(), UserLoginRequest.class);
+	// Méthode appelée en cas d'authentification réussie pour générer et renvoyer un
+	// jeton JWT.
+	@Override
+	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
+			Authentication auth) throws IOException, ServletException {
 
-				return authenticationManager.authenticate(
-						new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
+		// Obtention du nom d'utilisateur à partir de l'authentification réussie.
+		String userName = ((User) auth.getPrincipal()).getUsername();
 
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}	
-		
-		@Override
-	    protected void successfulAuthentication(HttpServletRequest req,
-	                                            HttpServletResponse res,
-	                                            FilterChain chain,
-	                                            Authentication auth) throws IOException, ServletException {
-	        
-	        String userName = ((User) auth.getPrincipal()).getUsername(); 
-	        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImpl");
-	        
-	        UserDto userDto = userService.getUser(userName);
-	        String token = Jwts.builder()
-	                .setSubject(userName)
-	                .claim("role", userDto.getRole())
-	                .claim("id", userDto.getUserId())
-	                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-	                .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET )
-	                .compact();
-	        
+		// Obtention du service utilisateur à partir du contexte Spring.
+		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
 
-	       
-	        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-	        res.addHeader("user_id", userDto.getUserId());
-	        res.getWriter().write("{\"token\": \"" + token +"\"}");
-	       
+		// Récupération des informations de l'utilisateur à partir du service
+		// utilisateur.
+		UserDto userDto = userService.getUser(userName);
 
-	    }
-		
-		
-		
-		
-		
-}		
+		// Création du jeton JWT.
+		String token = Jwts.builder().setSubject(userName).claim("role", userDto.getRole())
+				.claim("id", userDto.getUserId())
+				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+				.signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET).compact();
+
+		// Ajout du jeton JWT dans les en-têtes de la réponse.
+		res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+		res.addHeader("user_id", userDto.getUserId());
+		// Écriture du jeton dans le corps de la réponse au format JSON.
+		res.getWriter().write("{\"token\": \"" + token + "\"}");
+	}
+}

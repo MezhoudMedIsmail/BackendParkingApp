@@ -18,41 +18,50 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Service
-public class FileServiceImpl implements FileService{
-	
-	@Autowired
-    private FileRepository dbFileRepository;
+//Implémentation de l'interface FileService définissant les opérations de gestion des fichiers.
+public class FileServiceImpl implements FileService {
 
+	// Injection de dépendance du repository de fichiers.
+	@Autowired
+	private FileRepository dbFileRepository;
+
+	// Méthode pour stocker un fichier dans le système.
 	@Override
-	public FileEntity storeFile(MultipartFile file,String userId) {
+	public FileEntity storeFile(MultipartFile file, String userId) {
+		// Recherche d'un fichier existant associé à l'utilisateur.
 		Optional<FileEntity> fileUser = dbFileRepository.findByUserId(userId);
-		if(fileUser.isPresent()) {
+
+		// Suppression du fichier existant s'il est trouvé.
+		if (fileUser.isPresent()) {
 			dbFileRepository.delete(fileUser.get());
 		}
-		 // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-        try {
-            // Check if the file's name contains invalid characters
-            if(fileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-            }
+		// Normalisation du nom de fichier.
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-            FileEntity dbFile = new FileEntity(fileName, file.getContentType(), file.getBytes(),userId);
-            
-            return dbFileRepository.save(dbFile);
-        } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
-        }
+		try {
+			// Vérification si le nom de fichier contient des caractères invalides.
+			if (fileName.contains("..")) {
+				throw new FileStorageException(
+						"Désolé ! Le nom de fichier contient une séquence de chemin non valide " + fileName);
+			}
+
+			// Création d'un objet FileEntity et sauvegarde dans le repository.
+			FileEntity dbFile = new FileEntity(fileName, file.getContentType(), file.getBytes(), userId);
+			return dbFileRepository.save(dbFile);
+		} catch (IOException ex) {
+			throw new FileStorageException("Impossible de stocker le fichier " + fileName + ". Veuillez réessayer !",
+					ex);
+		}
 	}
 
+	// Méthode pour récupérer les informations d'un fichier en fonction de l'ID de
+	// l'utilisateur.
 	@Override
 	public FileEntity getFile(String userId) {
-		return dbFileRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Oops! We couldn't find your profile picture, but we're working to bring it back soon! Stay tuned!",
-                        new FileNotFoundException("File not found with id " + userId)));
+		// Recherche du fichier associé à l'ID de l'utilisateur.
+		return dbFileRepository.findByUserId(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+				"Oops ! Nous n'avons pas pu trouver votre photo de profil, mais nous travaillons pour la ramener bientôt ! Restez à l'écoute !",
+				new FileNotFoundException("Fichier non trouvé avec l'ID " + userId)));
 	}
-
 }

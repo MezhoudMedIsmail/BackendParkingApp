@@ -15,9 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -26,70 +23,68 @@ import lombok.Setter;
 @Table(name = "files")
 public class FileEntity implements Serializable {
 	@Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-	    private String id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-	    private String fileName;
+	private String fileName;
 
-	    private String fileType;
-	    
-	    private String userId;
+	private String fileType;
 
-	    @Lob
-	    private byte[] data;
+	private String userId;
 
-	    public FileEntity() {
+	@Lob
+	private byte[] data;
 
-	    }
+	public FileEntity() {
 
-	    public FileEntity(String fileName, String fileType, byte[] data,String userId) {
-	        this.setFileName(fileName);
-	        this.setFileType(fileType);
-	        this.data = data;
-	        this.setUserId(userId);
-	    }
+	}
 
-		public String getFileName() {
-			return fileName;
-		}
+	public FileEntity(String fileName, String fileType, byte[] data, String userId) {
+		this.setFileName(fileName);
+		this.setFileType(fileType);
+		this.data = data;
+		this.setUserId(userId);
+	}
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
+	public String getFileName() {
+		return fileName;
+	}
 
-		public String getFileType() {
-			return fileType;
-		}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-		public void setFileType(String fileType) {
-			this.fileType = fileType;
-		}
+	public String getFileType() {
+		return fileType;
+	}
 
-		public String getId() {
-			return id;
-		}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
 
-		public void setId(String id) {
-			this.id = id;
-		}
+	public String getId() {
+		return id;
+	}
 
-		public byte[] getData() {
-			return data;
-		}
+	public void setId(String id) {
+		this.id = id;
+	}
 
-		public void setData(byte[] data) {
-			this.data = data;
-		}
+	public byte[] getData() {
+		return data;
+	}
 
-		public String getUserId() {
-			return userId;
-		}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 }
-
-

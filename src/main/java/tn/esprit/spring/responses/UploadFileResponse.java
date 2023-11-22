@@ -1,47 +1,66 @@
 package tn.esprit.spring.responses;
 
+//Déclaration de la classe UploadFileResponse utilisée pour encapsuler les informations de réponse après le téléchargement d'un fichier.
 public class UploadFileResponse {
-    private String fileName;
-    private String fileDownloadUri;
-    private String fileType;
-    private long size;
 
-    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
-        this.fileName = fileName;
-        this.fileDownloadUri = fileDownloadUri;
-        this.fileType = fileType;
-        this.size = size;
-    }
+	// Attribut représentant le nom du fichier téléchargé.
+	private String fileName;
 
-    public String getFileName() {
-        return fileName;
-    }
+	// Attribut représentant l'URI de téléchargement du fichier.
+	private String fileDownloadUri;
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	// Attribut représentant le type de fichier.
+	private String fileType;
 
-    public String getFileDownloadUri() {
-        return fileDownloadUri;
-    }
+	// Attribut représentant la taille du fichier.
+	private long size;
 
-    public void setFileDownloadUri(String fileDownloadUri) {
-        this.fileDownloadUri = fileDownloadUri;
-    }
+	// Constructeur de la classe qui initialise les attributs avec les valeurs
+	// spécifiées.
+	public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+		this.fileName = fileName;
+		this.fileDownloadUri = fileDownloadUri;
+		this.fileType = fileType;
+		this.size = size;
+	}
 
-    public String getFileType() {
-        return fileType;
-    }
+	// Méthode permettant d'obtenir le nom du fichier téléchargé.
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
+	// Méthode permettant de définir le nom du fichier téléchargé.
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public long getSize() {
-        return size;
-    }
+	// Méthode permettant d'obtenir l'URI de téléchargement du fichier.
+	public String getFileDownloadUri() {
+		return fileDownloadUri;
+	}
 
-    public void setSize(long size) {
-        this.size = size;
-    }
+	// Méthode permettant de définir l'URI de téléchargement du fichier.
+	public void setFileDownloadUri(String fileDownloadUri) {
+		this.fileDownloadUri = fileDownloadUri;
+	}
+
+	// Méthode permettant d'obtenir le type de fichier.
+	public String getFileType() {
+		return fileType;
+	}
+
+	// Méthode permettant de définir le type de fichier.
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	// Méthode permettant d'obtenir la taille du fichier.
+	public long getSize() {
+		return size;
+	}
+
+	// Méthode permettant de définir la taille du fichier.
+	public void setSize(long size) {
+		this.size = size;
+	}
 }

@@ -12,22 +12,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Reservation  implements Serializable {
+public class Reservation implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	private Date startTime;
 
-    private Date endTime;
-    
-    @OneToOne(cascade = { CascadeType.ALL})
+	private Date endTime;
+
+	@OneToOne(cascade = { CascadeType.ALL })
 	private PlaceParking placeparkings;
 
 	public Long getId() {
@@ -57,9 +57,5 @@ public class Reservation  implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-    
-    
-    
-    
 
 }

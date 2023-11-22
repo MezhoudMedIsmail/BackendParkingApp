@@ -29,32 +29,28 @@ import lombok.Setter;
 @Setter
 public class PlaceParking implements Serializable {
 	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name="status")
-    private boolean status;
-    @Column(name="reservation")
-    private LocalDateTime reservation;
-    @Column(name="startDate")
-    private Date startDate;
-    @Column(name="endDate")
-    private Date endDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Column(name = "status")
+	private boolean status;
+	@Column(name = "reservation")
+	private LocalDateTime reservation;
+	@Column(name = "startDate")
+	private Date startDate;
+	@Column(name = "endDate")
+	private Date endDate;
 
-    
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="parking_id")
-    @JsonIgnore
-    private Parking parking;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "parking_id")
+	@JsonIgnore
+	private Parking parking;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-	
-    
-    
-    
-    public LocalDateTime getReservation() {
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private UserEntity user;
+
+	public LocalDateTime getReservation() {
 		return reservation;
 	}
 
@@ -66,43 +62,33 @@ public class PlaceParking implements Serializable {
 		return parking;
 	}
 
-
 	public void setParking(Parking parking) {
 		this.parking = parking;
 	}
 
-	
-    public long getId() {
+	public long getId() {
 		return id;
 	}
-
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-
 	public boolean getStatus() {
 		return status;
 	}
-
 
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
-
-
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
 	public UserEntity getUser() {
 		return user;
 	}
-
 
 	public void setUser(UserEntity user) {
 		this.user = user;
